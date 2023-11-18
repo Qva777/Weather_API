@@ -57,6 +57,7 @@ OPENWEATHERMAP_URL=http://api.openweathermap.org/data/2.5/forecast
 # OPENWEATHERMA API key (test)
 OPENWEATHERMAP_API_KEY=5b44ac6286917292ea1dc572affc3aff
 EOL
+cd ..
 ```
 
 <h3>2.2 UP Docker-compose:</h3>
