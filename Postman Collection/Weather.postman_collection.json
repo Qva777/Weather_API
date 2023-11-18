@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "5cce6d0f-a4ee-47e8-b673-0db59cf8a397",
+		"name": "Weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22355480"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Login (GET JWT)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"jwt_token\", response.access);",
+									"pm.environment.set(\"refresh_token\", response.refresh);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{username_admin}}\",\n    \"password\": \"{{password_admin}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/token/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt_token\", JSON.parse(responseBody).access);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "refresh",
+									"value": "{{refresh_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/token/refresh/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{username_admin}}\",\n    \"password\": \"{{password_admin}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/create_user/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"create_user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User (Detail)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users/1/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User (Detail) Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{username_admin}}_changed\",\n    \"password\": \"{{password_admin}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/users/1/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User (Detail)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users/1/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users (List)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Weather information",
+			"item": [
+				{
+					"name": "Current",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// city_name or zip_code\n{\n    \"query\": \"{{city_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serveo.net}}/api/weather/current/",
+							"host": [
+								"{{serveo.net}}"
+							],
+							"path": [
+								"api",
+								"weather",
+								"current",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current Forecast",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// city_name or zip_code\n{\n    \"query\": \"{{city_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serveo.net}}/api/weather/current_forecast/",
+							"host": [
+								"{{serveo.net}}"
+							],
+							"path": [
+								"api",
+								"weather",
+								"current_forecast",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// city_name or zip_code\n{\n    \"query\": \"{{city_name}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serveo.net}}/api/weather/search/",
+							"host": [
+								"{{serveo.net}}"
+							],
+							"path": [
+								"api",
+								"weather",
+								"search",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forecast",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// city_name or zip_code\n{\n    \"query\": \"{{city_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serveo.net}}/api/weather/forecast/",
+							"host": [
+								"{{serveo.net}}"
+							],
+							"path": [
+								"api",
+								"weather",
+								"forecast",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
