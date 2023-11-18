@@ -33,6 +33,7 @@ http://localhost:8000/
 <h3>2.1 Create Your .env and set correct values:</h3>
 
 ```
+cd backend/
 echo "Creating .env file..."
 cat <<EOL > .env
 # Django configuration
