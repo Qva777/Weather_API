@@ -44,7 +44,6 @@ DEBUG=1
 DB_ENGINE=django.db.backends.postgresql_psycopg2
 POSTGRES_DB=weather_db
 POSTGRES_USER=postgres
-POSTGRES_PASSWORD_1=lolpop88
 POSTGRES_PASSWORD=example
 DB_PORT=5432
 
